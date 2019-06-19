@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "FeatureApp";
+
+package Feature;
+
+service FeatureType {
+  rpc GetAll (FeatureRequest) returns (FeatureReply) {}
+}
+
+message FeatureRequest {
+  string page_number = 1;
+}
+
+message FeatureReply {
+  repeated FeatureEntity features = 1;
+}
+
+message FeatureEntity {
+	int32 id = 1;
+	string title = 2;
+	string created = 3; 
+}

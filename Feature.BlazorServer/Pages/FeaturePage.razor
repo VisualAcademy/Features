@@ -1,0 +1,62 @@
+@page "/featurepage"
+@using FeatureApp
+@using Feature.BlazorServer.Data
+@using Microsoft.AspNetCore.Authorization
+@inject WeatherForecastService ForecastService
+@attribute [Authorize]
+
+@using Grpc.Net.Client
+@using Feature.Shared
+
+<h1>Feature List</h1>
+
+@if (features == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var f in features)
+            {
+                <tr>
+                    <td>@f.Id</td>
+                    <td>@f.Title</td>
+                    <td>@f.Created.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<FeatureModel> features = new List<FeatureModel>();
+
+    protected override async Task OnInitAsync()
+    {
+        AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri("http://localhost:50051");
+
+        var featureClient = GrpcClient.Create<FeatureType.FeatureTypeClient>(httpClient);
+        var feature = await featureClient.GetAllAsync(new FeatureRequest { PageNumber = "1" });
+
+        foreach (var f in feature.Features)
+        {
+            if (!DateTime.TryParse(f.Created, out var now))
+            {
+                now = DateTime.Now;
+            }
+            FeatureModel m = new FeatureModel { Id = f.Id, Title = f.Title, Created = now };
+            features.Add(m);
+        }
+    }
+}
