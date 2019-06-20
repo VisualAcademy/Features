@@ -1,0 +1,51 @@
+@page "/featurepagetelerikgrid"
+
+@using Feature.Data
+
+@using FeatureApp
+@using Feature.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+@using Grpc.Net.Client
+@using Feature.Shared
+
+@using Telerik.Blazor.Components.Grid
+
+<h1>Feature List with Telerik Grid Trial</h1>
+
+<TelerikGrid Data=@Features Pageable="true" Sortable="true" Filterable="true" Height="400px">
+    <TelerikGridColumns>
+        <TelerikGridColumn Field="Id" Title="ID" />
+        <TelerikGridColumn Field="Title" />
+        <TelerikGridColumn Field="Created" />
+    </TelerikGridColumns>
+</TelerikGrid>
+
+@code {
+    List<FeatureModel> features = new List<FeatureModel>();
+
+    public IEnumerable<FeatureModel> Features { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri("http://localhost:50051");
+
+        var featureClient = GrpcClient.Create<FeatureType.FeatureTypeClient>(httpClient);
+        var feature = await featureClient.GetAllAsync(new FeatureRequest { PageNumber = "1" });
+
+        foreach (var f in feature.Features)
+        {
+            if (!DateTime.TryParse(f.Created, out var now))
+            {
+                now = DateTime.Now;
+            }
+            FeatureModel m = new FeatureModel { Id = f.Id, Title = f.Title, Created = now };
+            features.Add(m);
+        }
+
+        Features = features;
+    }
+}
