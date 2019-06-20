@@ -24,7 +24,9 @@ namespace Feature.BlazorServer.Data
             if (!optionsBuilder.IsConfigured)
             {
                 //string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Features;Trusted_Connection=True;MultipleActiveResultSets=true");
+                //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Features;Trusted_Connection=True;MultipleActiveResultSets=true");
+                string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 

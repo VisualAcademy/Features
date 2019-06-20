@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Feature.BlazorServer.Data.Migrations
+namespace Feature.Shared.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190619195151_AddFeaturesTable")]
+    [Migration("20190620002959_AddFeaturesTable")]
     partial class AddFeaturesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
