@@ -19,7 +19,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0-preview6.19307.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview6.19304.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0-preview6.19304.10" />
-    <PackageReference Include="Telerik.DataSource.Trial" Version="1.0.0" />
     <PackageReference Include="Telerik.UI.for.Blazor.Trial" Version="1.2.0" />
   </ItemGroup>
 
