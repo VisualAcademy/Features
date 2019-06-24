@@ -1,50 +1,35 @@
-@page "/featurepage"
-@using FeatureApp
-@using Feature.Models 
+@page "/featurepagetelerikgrid"
 
+@using Feature.Data
+
+@using FeatureApp
+@using Feature.Models
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
 @using Grpc.Net.Client
 @using Feature.Shared
 
-<h1>Feature List</h1>
+@using Telerik.Blazor.Components.Grid
 
-@if (features == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var f in features)
-            {
-                <tr>
-                    <td>@f.Id</td>
-                    <td>@f.Title</td>
-                    <td>@f.Created.ToString()</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<h1>Feature List with Telerik Grid Trial</h1>
+
+<TelerikGrid Data=@Features Pageable="true" Sortable="true" Filterable="true" Height="400px">
+    <TelerikGridColumns>
+        <TelerikGridColumn Field="Id" Title="ID" />
+        <TelerikGridColumn Field="Title" />
+        <TelerikGridColumn Field="Created" />
+    </TelerikGridColumns>
+</TelerikGrid>
 
 @code {
     List<FeatureModel> features = new List<FeatureModel>();
 
+    public IEnumerable<FeatureModel> Features { get; set; }
+
     protected override async Task OnInitAsync()
     {
-        // gRPC 서버에 데이터 요청 후 반환된 리스트를 출력
         AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-
         var httpClient = new HttpClient();
         httpClient.BaseAddress = new Uri("http://localhost:50051");
 
@@ -60,5 +45,7 @@ else
             FeatureModel m = new FeatureModel { Id = f.Id, Title = f.Title, Created = now };
             features.Add(m);
         }
+
+        Features = features;
     }
 }
