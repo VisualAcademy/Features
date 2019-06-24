@@ -35,11 +35,11 @@ namespace Feature.WorkerService
             string[] features = { "ASP.NET Core", "Blazor", "C#", "Dapper", "EF Core", "Facebook", "Google", "Microsoft" };
             while (!stoppingToken.IsCancellationRequested)
             {
-                FeatureModel model = new FeatureModel { Title = features[DateTime.Now.Minute % 8], Created = DateTime.Now };
-                context.Features.Add(model);
-                context.SaveChanges();
+                _logger.LogInformation("데이터 저장: {time}", DateTimeOffset.Now);
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                FeatureModel model = new FeatureModel { Title = features[DateTime.Now.Minute % 8], Created = DateTime.Now };
+                context.Features.Add(model); // 1분에 하나씩 데이터 저장
+                context.SaveChanges();
 
                 await Task.Delay(60_000, stoppingToken);
             }

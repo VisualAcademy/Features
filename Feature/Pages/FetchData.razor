@@ -2,6 +2,9 @@
 @using Feature.Data
 @inject WeatherForecastService ForecastService
 
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>

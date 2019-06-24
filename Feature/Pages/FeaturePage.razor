@@ -1,6 +1,7 @@
 @page "/featurepage"
 @using FeatureApp
 @using Feature.Models 
+
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
@@ -42,6 +43,7 @@ else
     protected override async Task OnInitAsync()
     {
         AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
         var httpClient = new HttpClient();
         httpClient.BaseAddress = new Uri("http://localhost:50051");
 
