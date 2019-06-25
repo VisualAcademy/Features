@@ -1,16 +1,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Feature.Models;
-using FeatureApp;
 using Grpc.Core;
 
 namespace Feature.RpcService
 {
-    public class FeatureService : FeatureType.FeatureTypeBase
+    public class FeatureServer : FeatureService.FeatureServiceBase
     {
         private readonly FeatureContext dbContext;
 
-        public FeatureService(FeatureContext dbContext)
+        public FeatureServer(FeatureContext dbContext)
         {
             this.dbContext = dbContext;
         }

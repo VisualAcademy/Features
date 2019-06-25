@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-option csharp_namespace = "FeatureApp";
+option csharp_namespace = "Feature";
 
 package Feature;
 
-service FeatureType {
+service FeatureService {
   rpc GetAll (FeatureRequest) returns (FeatureReply) {}
 }
 
