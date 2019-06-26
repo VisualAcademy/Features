@@ -32,7 +32,10 @@ namespace Feature.WorkerService
             var context = new FeatureContext(option.Options);
 
             //[3] 샘플로 60초에 한번씩 문자열 데이터 입력 
-            string[] features = { "ASP.NET Core", "Blazor", "C#", "Dapper", "EF Core", "Facebook", "Google", "Microsoft" };
+            string[] features = {
+                "ASP.NET Core", "Blazor", "C#", "Dapper", "EF Core", "Facebook", "Google",
+                "Microsoft"
+            };
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("데이터 저장: {time}", DateTimeOffset.Now);
