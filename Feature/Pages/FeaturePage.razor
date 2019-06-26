@@ -2,11 +2,12 @@
 @using Feature
 @using Feature.Models 
 
+@* 인증된 사용자만 접근 가능 *@
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
+@* gRPC 클라이언트 코드를 위한 패키지 참조 *@
 @using Grpc.Net.Client
-@using Feature.Shared
 
 <h1>Feature List</h1>
 
