@@ -16,6 +16,7 @@ namespace Feature.RpcService
 
         public override Task<FeatureReply> GetAll(FeatureRequest request, ServerCallContext context)
         {
+            // Features 테이블의 모든 레코드 반환
             FeatureReply reply = new FeatureReply();
             var features = dbContext.Features.OrderBy(f => f.Id).ToList();
             foreach (var f in features)

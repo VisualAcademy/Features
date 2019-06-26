@@ -4,14 +4,17 @@ option csharp_namespace = "Feature";
 
 package Feature;
 
+// 서비스 클래스와 메서드
 service FeatureService {
   rpc GetAll (FeatureRequest) returns (FeatureReply) {}
 }
 
+// 요청 형식
 message FeatureRequest {
   string page_number = 1;
 }
 
+// 응답 형식
 message FeatureReply {
   repeated FeatureEntity features = 1;
 }
